@@ -1,23 +1,33 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:reddit/data/models/post.model.dart';
 
 class VideoOptionsWidget extends StatelessWidget {
-  const VideoOptionsWidget({Key? key}) : super(key: key);
+  const VideoOptionsWidget({
+    Key? key,
+    required this.postModel,
+  }) : super(key: key);
+  final PostModel postModel;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         GestureDetector(
+          onTap: () {
+            postModel.upvotesCount++;
+          },
           child: SvgPicture.asset(
             'assets/icons/upvote_icon.svg',
             color: Colors.white,
           ),
         ),
         const SizedBox(height: 5),
-        const Text(
-          '1000',
-          style: TextStyle(color: Colors.white),
+        Text(
+          '${(postModel.upvotesCount - postModel.downVotesCount)}',
+          style: const TextStyle(color: Colors.white),
         ),
         const SizedBox(height: 5),
         GestureDetector(
@@ -29,16 +39,16 @@ class VideoOptionsWidget extends StatelessWidget {
         const SizedBox(height: 20),
         GestureDetector(
           onTap: () {},
-          child: const Column(
+          child: Column(
             children: [
-              Icon(
+              const Icon(
                 Icons.mode_comment_outlined,
                 color: Colors.white,
               ),
-              SizedBox(height: 3),
+              const SizedBox(height: 3),
               Text(
-                '1000',
-                style: TextStyle(color: Colors.white),
+                '${postModel.commentCount}',
+                style: const TextStyle(color: Colors.white),
               ),
             ],
           ),

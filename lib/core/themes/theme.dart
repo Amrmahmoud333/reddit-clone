@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ThemeOfProject {
   static final darkTheme = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: Colors.blue.shade300,
+    scaffoldBackgroundColor: const Color.fromRGBO(18, 18, 18, 1),
     cardColor: const Color.fromRGBO(26, 39, 45, 1),
     appBarTheme: const AppBarTheme(
       backgroundColor: Color.fromRGBO(18, 18, 18, 1),

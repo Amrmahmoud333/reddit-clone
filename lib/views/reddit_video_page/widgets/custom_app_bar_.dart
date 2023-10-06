@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({
-    super.key,
-  });
-
+  const CustomAppBar({super.key, required this.title});
+  final String title;
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
-        Icon(Icons.arrow_back),
-        SizedBox(
+        const Icon(Icons.arrow_back),
+        const SizedBox(
           width: 72,
         ),
-        CircleAvatar(
+        const CircleAvatar(
           maxRadius: 15,
           child: Icon(
             Icons.person,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 7,
         ),
-        Text('r/AmrMahmoud'),
+        Text('r/$title'),
       ],
     );
   }

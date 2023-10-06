@@ -4,8 +4,8 @@ class PostModel {
   final String videoLink;
   final String description;
   int upvotesCount;
-  final int downVotesCount;
-  final int commentCount;
+  int downVotesCount;
+  int commentCount;
 
   PostModel({
     required this.userName,

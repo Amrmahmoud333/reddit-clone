@@ -1,10 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reddit/data/models/post.model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:reddit/logic/video_provider.dart';
 
-class VideoOptionsWidget extends StatelessWidget {
+class VideoOptionsWidget extends ConsumerWidget {
   const VideoOptionsWidget({
     Key? key,
     required this.postModel,
@@ -12,28 +12,61 @@ class VideoOptionsWidget extends StatelessWidget {
   final PostModel postModel;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    VideoProvider videoProv = ref.watch(videoProvider);
     return Column(
       children: [
         GestureDetector(
           onTap: () {
-            postModel.upvotesCount++;
+            videoProv.upVote();
           },
-          child: SvgPicture.asset(
-            'assets/icons/upvote_icon.svg',
-            color: Colors.white,
+          child: TweenAnimationBuilder(
+            tween: ColorTween(
+              begin: videoProv.upvoteIconPressed
+                  ? Colors.redAccent
+                  : Colors.transparent,
+              end:
+                  videoProv.upvoteIconPressed ? Colors.redAccent : Colors.white,
+            ),
+            duration: const Duration(milliseconds: 250),
+            builder: (context, color, child) {
+              return SvgPicture.asset(
+                videoProv.upvoteIconPressed
+                    ? 'assets/icons/upvote_icon_full.svg'
+                    : 'assets/icons/upvote_icon.svg',
+                color: color,
+              );
+            },
           ),
         ),
         const SizedBox(height: 5),
         Text(
-          '${(postModel.upvotesCount - postModel.downVotesCount)}',
+          '${(videoProv.getTotalNumberOfVotes())}',
           style: const TextStyle(color: Colors.white),
         ),
         const SizedBox(height: 5),
         GestureDetector(
-          child: SvgPicture.asset(
-            'assets/icons/downvote_icon.svg',
-            color: Colors.white,
+          onTap: () {
+            videoProv.downVote();
+          },
+          child: TweenAnimationBuilder(
+            tween: ColorTween(
+              begin: videoProv.downVoteIconPressed
+                  ? Colors.blueAccent
+                  : Colors.transparent,
+              end: videoProv.downVoteIconPressed
+                  ? Colors.blueAccent
+                  : Colors.white,
+            ),
+            duration: const Duration(milliseconds: 250),
+            builder: (context, color, child) {
+              return SvgPicture.asset(
+                videoProv.downVoteIconPressed
+                    ? 'assets/icons/downvote_icon_full.svg'
+                    : 'assets/icons/downvote_icon.svg',
+                color: color,
+              );
+            },
           ),
         ),
         const SizedBox(height: 20),

@@ -29,6 +29,19 @@ class _VideoWidgetState extends State<VideoWidget> {
         videoPlayerController: videoPlayerController,
         autoPlay: true,
         looping: true,
+        materialProgressColors: ChewieProgressColors(
+          playedColor: Colors.grey,
+          handleColor: Colors.white,
+        ),
+        autoInitialize: true,
+        errorBuilder: (context, errorMessage) {
+          return Center(
+            child: Text(
+              errorMessage,
+              style: const TextStyle(color: Colors.white),
+            ),
+          );
+        },
       );
     });
   }

@@ -22,4 +22,40 @@ class VideoProvider extends ChangeNotifier {
       commentCount: 165,
     );
   }
+
+  bool _upvoteIconPressed = false;
+  bool get upvoteIconPressed => _upvoteIconPressed;
+  bool _downVoteIconPressed = false;
+  bool get downVoteIconPressed => _downVoteIconPressed;
+
+  upVote() {
+    // click on up vote for the second time
+    if (_upvoteIconPressed) {
+      _postModel!.upvotesCount--;
+      _upvoteIconPressed = false;
+    } else {
+      _postModel!.upvotesCount++;
+      _upvoteIconPressed = true;
+      _downVoteIconPressed = false;
+    }
+
+    notifyListeners();
+  }
+
+  downVote() {
+    if (_downVoteIconPressed) {
+      _postModel!.downVotesCount--;
+      _downVoteIconPressed = false;
+    } else {
+      _postModel!.downVotesCount++;
+      _downVoteIconPressed = true;
+      _upvoteIconPressed = false;
+    }
+
+    notifyListeners();
+  }
+
+  int getTotalNumberOfVotes() {
+    return _postModel!.upvotesCount - _postModel!.downVotesCount;
+  }
 }

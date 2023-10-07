@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:reddit/data/models/post.model.dart';
-import 'package:reddit/logic/video_provider.dart';
+import 'package:reddit/logic/provider/comment_provider.dart';
+import 'package:reddit/logic/provider/video_provider.dart';
+import 'package:reddit/views/reddit_video_page/widgets/comment_widget.dart';
 import 'package:reddit/views/reddit_video_page/widgets/custom_app_bar_.dart';
 import 'package:reddit/views/reddit_video_page/widgets/video_options_widget.dart';
 import 'package:reddit/views/reddit_video_page/widgets/video_widget.dart';
@@ -21,9 +23,14 @@ class _RedditVideoScreenState extends ConsumerState<RedditVideoScreen> {
     postModel = ref.read(videoProvider).getPostModel!;
   }
 
+  getPostComments() {
+    ref.read(commentProvider).createPostModel();
+  }
+
   @override
   void initState() {
     getPostData();
+    getPostComments();
     super.initState();
   }
 
@@ -35,7 +42,7 @@ class _RedditVideoScreenState extends ConsumerState<RedditVideoScreen> {
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
           child: ListView.builder(
-            itemCount: 5,
+            itemCount: 2,
             controller: _scrollController,
             itemBuilder: (context, index) {
               if (ref.watch(videoProvider).commentIsPressed) {
@@ -66,10 +73,7 @@ class _RedditVideoScreenState extends ConsumerState<RedditVideoScreen> {
                         ],
                       ),
                     )
-                  : Container(
-                      height: 300,
-                      color: Colors.amber,
-                    );
+                  : commentWidget(context);
             },
           ),
         ),

@@ -15,6 +15,7 @@ class RedditVideoScreen extends ConsumerStatefulWidget {
 
 class _RedditVideoScreenState extends ConsumerState<RedditVideoScreen> {
   late PostModel postModel;
+  ScrollController _scrollController = ScrollController();
   getPostData() {
     ref.read(videoProvider).createPostModel();
     postModel = ref.read(videoProvider).getPostModel!;
@@ -29,31 +30,49 @@ class _RedditVideoScreenState extends ConsumerState<RedditVideoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Stack(
-            alignment: Alignment.topRight,
-            children: [
-              VideoWidget(
-                videoUrl: postModel.videoLink,
-              ),
-              Positioned(
-                top: 42,
-                left: 10,
-                child: CustomAppBar(
-                  title: postModel.title,
-                ),
-              ),
-              Positioned(
-                  top: 480,
-                  right: 5,
-                  child: VideoOptionsWidget(
-                    postModel: postModel,
-                  )),
-            ],
-          )
-        ],
+      body: SafeArea(
+        child: SizedBox(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height,
+          child: ListView.builder(
+            itemCount: 5,
+            controller: _scrollController,
+            itemBuilder: (context, index) {
+              if (ref.watch(videoProvider).commentIsPressed) {
+                _scrollController.jumpTo(400);
+              }
+              return index == 0
+                  ? SizedBox(
+                      height: MediaQuery.of(context).size.height - 22,
+                      child: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          VideoWidget(
+                            videoUrl: postModel.videoLink,
+                          ),
+                          Positioned(
+                            top: 12,
+                            left: 10,
+                            child: CustomAppBar(
+                              title: postModel.title,
+                            ),
+                          ),
+                          Positioned(
+                              top: 480,
+                              right: 5,
+                              child: VideoOptionsWidget(
+                                postModel: postModel,
+                              )),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      height: 300,
+                      color: Colors.amber,
+                    );
+            },
+          ),
+        ),
       ),
     );
   }

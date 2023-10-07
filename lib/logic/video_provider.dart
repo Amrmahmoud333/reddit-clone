@@ -58,4 +58,13 @@ class VideoProvider extends ChangeNotifier {
   int getTotalNumberOfVotes() {
     return _postModel!.upvotesCount - _postModel!.downVotesCount;
   }
+
+  bool _commentIsPressed = false;
+  bool get commentIsPressed => _commentIsPressed;
+
+  pressOnComment() {
+    _commentIsPressed = !_commentIsPressed;
+
+    notifyListeners();
+  }
 }

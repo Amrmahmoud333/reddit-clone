@@ -69,9 +69,11 @@ class VideoOptionsWidget extends ConsumerWidget {
             },
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            videoProv.pressOnComment();
+          },
           child: Column(
             children: [
               const Icon(
@@ -86,7 +88,7 @@ class VideoOptionsWidget extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
         GestureDetector(
           child: const Icon(
             Icons.file_upload_outlined,

@@ -6,15 +6,16 @@ final commentProvider =
     ChangeNotifierProvider<CommentProvider>((ref) => CommentProvider());
 
 class CommentProvider extends ChangeNotifier {
-  List<CommentModel>? _commentModel;
-  List<CommentModel>? get getCommentModel => _commentModel;
+  List<CommentModel>? _commentModelList;
+  List<CommentModel>? get getCommentModelList => _commentModelList;
 
   createPostModel() {
     List<CommentModel> _commentModelCopy = [];
     for (int i = 0; i < 8; i++) {
-      _commentModelCopy.add(
+      _commentModelCopy.insert(
+        0,
         CommentModel(
-            id: 'id',
+            id: '$i',
             text: 'aaaaaaaa',
             createdAt: DateTime(2023),
             postId: '11',
@@ -25,38 +26,43 @@ class CommentProvider extends ChangeNotifier {
             upvotesCount: 12),
       );
     }
-    _commentModel = _commentModelCopy;
+    _commentModelList = _commentModelCopy;
+  }
+
+  addComment({required CommentModel commentModel}) {
+    _commentModelList!.add(commentModel);
+    notifyListeners();
   }
 
   upVote({required int commentIndex}) {
     // click on up vote for the second time
-    if (_commentModel![commentIndex].upvoteIconPressed) {
-      _commentModel![commentIndex].upvotesCount--;
-      _commentModel![commentIndex].upvoteIconPressed = false;
+    if (_commentModelList![commentIndex].upvoteIconPressed) {
+      _commentModelList![commentIndex].upvotesCount--;
+      _commentModelList![commentIndex].upvoteIconPressed = false;
     } else {
-      _commentModel![commentIndex].upvotesCount++;
-      _commentModel![commentIndex].upvoteIconPressed = true;
-      _commentModel![commentIndex].downVoteIconPressed = false;
+      _commentModelList![commentIndex].upvotesCount++;
+      _commentModelList![commentIndex].upvoteIconPressed = true;
+      _commentModelList![commentIndex].downVoteIconPressed = false;
     }
 
     notifyListeners();
   }
 
   downVote({required int commentIndex}) {
-    if (_commentModel![commentIndex].downVoteIconPressed) {
-      _commentModel![commentIndex].downVotesCount--;
-      _commentModel![commentIndex].downVoteIconPressed = false;
+    if (_commentModelList![commentIndex].downVoteIconPressed) {
+      _commentModelList![commentIndex].downVotesCount--;
+      _commentModelList![commentIndex].downVoteIconPressed = false;
     } else {
-      _commentModel![commentIndex].downVotesCount++;
-      _commentModel![commentIndex].downVoteIconPressed = true;
-      _commentModel![commentIndex].upvoteIconPressed = false;
+      _commentModelList![commentIndex].downVotesCount++;
+      _commentModelList![commentIndex].downVoteIconPressed = true;
+      _commentModelList![commentIndex].upvoteIconPressed = false;
     }
 
     notifyListeners();
   }
 
   int getTotalNumberOfVotes({required int commentIndex}) {
-    return _commentModel![commentIndex].upvotesCount -
-        _commentModel![commentIndex].downVotesCount;
+    return _commentModelList![commentIndex].upvotesCount -
+        _commentModelList![commentIndex].downVotesCount;
   }
 }

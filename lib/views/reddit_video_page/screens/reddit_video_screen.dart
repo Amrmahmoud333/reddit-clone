@@ -73,8 +73,10 @@ class _RedditVideoScreenState extends ConsumerState<RedditVideoScreen> {
                         ],
                       ),
                     )
-                  : commentWidget(context,
-                      ref.read(commentProvider).getCommentModel!.length);
+                  : commentWidget(
+                      context,
+                      ref.read(commentProvider).getCommentModelList!.length,
+                      ref.watch(commentProvider));
             },
           ),
         ),

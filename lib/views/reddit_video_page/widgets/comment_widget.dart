@@ -48,15 +48,114 @@ Stack commentWidget(
                   },
                   itemBuilder: (context, index) {
                     return Padding(
-                      // add padding olny to the last item
+                      // add padding olny to the last item and the first item
                       padding: EdgeInsets.only(
-                          bottom: index == listSize - 1 ? 60 : 0),
-                      child: Container(
-                        height: 115,
-                        color: Colors.black,
-                        width: double.infinity,
-                        child: CommentCard(
-                          commentIndex: index,
+                          bottom: index == listSize - 1 ? 60 : 0,
+                          top: index == 0 ? 10 : 0),
+                      child: InkWell(
+                        onLongPress: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Wrap(
+                                  children: [
+                                    ListTile(
+                                      leading: const Icon(Icons.share),
+                                      title: const Text('Share'),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    ListTile(
+                                      leading:
+                                          const Icon(Icons.save_alt_outlined),
+                                      title: const Text('Save'),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(Icons.copy),
+                                      title: const Text('Copy'),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    ListTile(
+                                      leading:
+                                          const Icon(Icons.mode_edit_outlined),
+                                      title: const Text('Edit'),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(
+                                          Icons.delete_outline_sharp),
+                                      title: const Text('Delete'),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title:
+                                                  const Text('Are you sure?'),
+                                              content: const Text(
+                                                'You cannot restore comments that have been deleted',
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  child: const Text('Cancel'),
+                                                  onPressed: () {
+                                                    Navigator.pop(
+                                                        context); // Close the dialog
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  child: const Text(
+                                                    'Delete',
+                                                    style: TextStyle(
+                                                        color: Colors.red),
+                                                  ),
+                                                  onPressed: () {
+                                                    commentProvider.deleteComment(
+                                                        id: commentProvider
+                                                            .getCommentModelList![
+                                                                index]
+                                                            .id);
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(Icons.close),
+                                      title: const Text('Close'),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          height: 115,
+                          color: Colors.black54,
+                          width: double.infinity,
+                          child: CommentCard(
+                            commentIndex: index,
+                          ),
                         ),
                       ),
                     );

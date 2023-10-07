@@ -11,12 +11,12 @@ class CommentProvider extends ChangeNotifier {
 
   createPostModel() {
     List<CommentModel> _commentModelCopy = [];
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 2; i++) {
       _commentModelCopy.insert(
         0,
         CommentModel(
             id: '$i',
-            text: 'aaaaaaaa',
+            text: '${i * 250000} test',
             createdAt: DateTime(2023),
             postId: '11',
             username: 'amr',
@@ -31,6 +31,11 @@ class CommentProvider extends ChangeNotifier {
 
   addComment({required CommentModel commentModel}) {
     _commentModelList!.add(commentModel);
+    notifyListeners();
+  }
+
+  deleteComment({required String id}) {
+    _commentModelList!.removeWhere((element) => element.id == id);
     notifyListeners();
   }
 

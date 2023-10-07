@@ -29,7 +29,7 @@ class CommentCard extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                    commentProv.getCommentModel![commentIndex].profilePic,
+                    commentProv.getCommentModelList![commentIndex].profilePic,
                   ),
                   radius: 13,
                 ),
@@ -37,7 +37,7 @@ class CommentCard extends ConsumerWidget {
                   width: 10,
                 ),
                 Text(
-                  'u/${commentProv.getCommentModel![commentIndex].username}',
+                  'u/${commentProv.getCommentModelList![commentIndex].username}',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -46,13 +46,13 @@ class CommentCard extends ConsumerWidget {
                   width: 10,
                 ),
                 Text(
-                  '${commentProv.getCommentModel![commentIndex].createdAt.year}',
+                  '${commentProv.getCommentModelList![commentIndex].createdAt.year}',
                   style: const TextStyle(fontSize: 10),
                 ),
               ],
             ),
           ),
-          Text(commentProv.getCommentModel![commentIndex].text),
+          Text(commentProv.getCommentModelList![commentIndex].text),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -71,20 +71,20 @@ class CommentCard extends ConsumerWidget {
                 },
                 child: TweenAnimationBuilder(
                   tween: ColorTween(
-                    begin: commentProv
-                            .getCommentModel![commentIndex].upvoteIconPressed
+                    begin: commentProv.getCommentModelList![commentIndex]
+                            .upvoteIconPressed
                         ? Colors.redAccent
                         : Colors.transparent,
-                    end: commentProv
-                            .getCommentModel![commentIndex].upvoteIconPressed
+                    end: commentProv.getCommentModelList![commentIndex]
+                            .upvoteIconPressed
                         ? Colors.redAccent
                         : Colors.white,
                   ),
                   duration: const Duration(milliseconds: 250),
                   builder: (context, color, child) {
                     return SvgPicture.asset(
-                      commentProv
-                              .getCommentModel![commentIndex].upvoteIconPressed
+                      commentProv.getCommentModelList![commentIndex]
+                              .upvoteIconPressed
                           ? 'assets/icons/upvote_icon_full.svg'
                           : 'assets/icons/upvote_icon.svg',
                       color: color,
@@ -104,19 +104,19 @@ class CommentCard extends ConsumerWidget {
                 },
                 child: TweenAnimationBuilder(
                   tween: ColorTween(
-                    begin: commentProv
-                            .getCommentModel![commentIndex].downVoteIconPressed
+                    begin: commentProv.getCommentModelList![commentIndex]
+                            .downVoteIconPressed
                         ? Colors.blueAccent
                         : Colors.transparent,
-                    end: commentProv
-                            .getCommentModel![commentIndex].downVoteIconPressed
+                    end: commentProv.getCommentModelList![commentIndex]
+                            .downVoteIconPressed
                         ? Colors.blueAccent
                         : Colors.white,
                   ),
                   duration: const Duration(milliseconds: 250),
                   builder: (context, color, child) {
                     return SvgPicture.asset(
-                      commentProv.getCommentModel![commentIndex]
+                      commentProv.getCommentModelList![commentIndex]
                               .downVoteIconPressed
                           ? 'assets/icons/downvote_icon_full.svg'
                           : 'assets/icons/downvote_icon.svg',

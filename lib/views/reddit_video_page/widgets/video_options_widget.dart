@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reddit/data/models/post.model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:reddit/logic/video_provider.dart';
+import 'package:reddit/logic/provider/video_provider.dart';
 
 class VideoOptionsWidget extends ConsumerWidget {
   const VideoOptionsWidget({
@@ -28,7 +28,7 @@ class VideoOptionsWidget extends ConsumerWidget {
               end:
                   videoProv.upvoteIconPressed ? Colors.redAccent : Colors.white,
             ),
-            duration: const Duration(milliseconds: 250),
+            duration: const Duration(milliseconds: 750),
             builder: (context, color, child) {
               return SvgPicture.asset(
                 videoProv.upvoteIconPressed
@@ -58,7 +58,7 @@ class VideoOptionsWidget extends ConsumerWidget {
                   ? Colors.blueAccent
                   : Colors.white,
             ),
-            duration: const Duration(milliseconds: 250),
+            duration: const Duration(milliseconds: 750),
             builder: (context, color, child) {
               return SvgPicture.asset(
                 videoProv.downVoteIconPressed
@@ -69,9 +69,11 @@ class VideoOptionsWidget extends ConsumerWidget {
             },
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            videoProv.pressOnComment();
+          },
           child: Column(
             children: [
               const Icon(
@@ -86,7 +88,7 @@ class VideoOptionsWidget extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
         GestureDetector(
           child: const Icon(
             Icons.file_upload_outlined,

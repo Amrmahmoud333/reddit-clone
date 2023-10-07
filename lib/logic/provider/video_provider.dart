@@ -19,7 +19,7 @@ class VideoProvider extends ChangeNotifier {
           'Random text Random text Random text Random text Random text Random text Random text ',
       upvotesCount: 240,
       downVotesCount: 20,
-      commentCount: 165,
+      commentCount: 3,
     );
   }
 
@@ -33,6 +33,12 @@ class VideoProvider extends ChangeNotifier {
     if (_upvoteIconPressed) {
       _postModel!.upvotesCount--;
       _upvoteIconPressed = false;
+    } else if (_downVoteIconPressed) {
+      // If the downvote is pressed that means remove the downvote and create a upvote
+      _postModel!.upvotesCount++;
+      _postModel!.downVotesCount--;
+      _upvoteIconPressed = true;
+      _downVoteIconPressed = false;
     } else {
       _postModel!.upvotesCount++;
       _upvoteIconPressed = true;
@@ -46,6 +52,11 @@ class VideoProvider extends ChangeNotifier {
     if (_downVoteIconPressed) {
       _postModel!.downVotesCount--;
       _downVoteIconPressed = false;
+    } else if (_upvoteIconPressed) {
+      _postModel!.downVotesCount++;
+      _postModel!.upvotesCount--;
+      _downVoteIconPressed = true;
+      _upvoteIconPressed = false;
     } else {
       _postModel!.downVotesCount++;
       _downVoteIconPressed = true;
@@ -57,5 +68,14 @@ class VideoProvider extends ChangeNotifier {
 
   int getTotalNumberOfVotes() {
     return _postModel!.upvotesCount - _postModel!.downVotesCount;
+  }
+
+  bool _commentIsPressed = false;
+  bool get commentIsPressed => _commentIsPressed;
+
+  pressOnComment() {
+    _commentIsPressed = true;
+
+    notifyListeners();
   }
 }

@@ -9,11 +9,6 @@ class CommentProvider extends ChangeNotifier {
   List<CommentModel>? _commentModel;
   List<CommentModel>? get getCommentModel => _commentModel;
 
-  bool _upvoteIconPressed = false;
-  bool get upvoteIconPressed => _upvoteIconPressed;
-  bool _downVoteIconPressed = false;
-  bool get downVoteIconPressed => _downVoteIconPressed;
-
   createPostModel() {
     List<CommentModel> _commentModelCopy = [];
     for (int i = 0; i < 8; i++) {
@@ -35,26 +30,26 @@ class CommentProvider extends ChangeNotifier {
 
   upVote({required int commentIndex}) {
     // click on up vote for the second time
-    if (_upvoteIconPressed) {
+    if (_commentModel![commentIndex].upvoteIconPressed) {
       _commentModel![commentIndex].upvotesCount--;
-      _upvoteIconPressed = false;
+      _commentModel![commentIndex].upvoteIconPressed = false;
     } else {
       _commentModel![commentIndex].upvotesCount++;
-      _upvoteIconPressed = true;
-      _downVoteIconPressed = false;
+      _commentModel![commentIndex].upvoteIconPressed = true;
+      _commentModel![commentIndex].downVoteIconPressed = false;
     }
 
     notifyListeners();
   }
 
   downVote({required int commentIndex}) {
-    if (_downVoteIconPressed) {
+    if (_commentModel![commentIndex].downVoteIconPressed) {
       _commentModel![commentIndex].downVotesCount--;
-      _downVoteIconPressed = false;
+      _commentModel![commentIndex].downVoteIconPressed = false;
     } else {
       _commentModel![commentIndex].downVotesCount++;
-      _downVoteIconPressed = true;
-      _upvoteIconPressed = false;
+      _commentModel![commentIndex].downVoteIconPressed = true;
+      _commentModel![commentIndex].upvoteIconPressed = false;
     }
 
     notifyListeners();

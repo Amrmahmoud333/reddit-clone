@@ -7,7 +7,8 @@ class CommentModel {
   final String profilePic;
   int upvotesCount;
   int downVotesCount;
-
+  bool upvoteIconPressed;
+  bool downVoteIconPressed;
   CommentModel({
     required this.id,
     required this.text,
@@ -17,6 +18,8 @@ class CommentModel {
     required this.profilePic,
     required this.upvotesCount,
     required this.downVotesCount,
+    this.upvoteIconPressed = false,
+    this.downVoteIconPressed = false,
   });
 
   CommentModel copyWith({
@@ -28,6 +31,8 @@ class CommentModel {
     String? profilePic,
     int? upvotesCount,
     int? downVotesCount,
+    bool? upvoteIconPressed,
+    bool? downVoteIconPressed,
   }) {
     return CommentModel(
       id: id ?? this.id,

@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:reddit/data/models/comment_model.dart';
 import 'package:reddit/logic/provider/comment_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CommentCard extends ConsumerWidget {
-  final CommentModel comment;
   final int commentIndex;
   const CommentCard({
     super.key,
-    required this.comment,
     required this.commentIndex,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     CommentProvider commentProv = ref.watch(commentProvider);
+
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 10,
@@ -31,7 +29,7 @@ class CommentCard extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                    comment.profilePic,
+                    commentProv.getCommentModel![commentIndex].profilePic,
                   ),
                   radius: 13,
                 ),
@@ -39,7 +37,7 @@ class CommentCard extends ConsumerWidget {
                   width: 10,
                 ),
                 Text(
-                  'u/${comment.username}',
+                  'u/${commentProv.getCommentModel![commentIndex].username}',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -48,33 +46,45 @@ class CommentCard extends ConsumerWidget {
                   width: 10,
                 ),
                 Text(
-                  '${comment.createdAt.year}',
+                  '${commentProv.getCommentModel![commentIndex].createdAt.year}',
                   style: const TextStyle(fontSize: 10),
                 ),
               ],
             ),
           ),
-          Text(comment.text),
+          Text(commentProv.getCommentModel![commentIndex].text),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.reply,
+                  size: 19,
+                ),
+              ),
+              const Text('Reply'),
+              const SizedBox(width: 25),
               GestureDetector(
                 onTap: () {
                   commentProv.upVote(commentIndex: commentIndex);
                 },
                 child: TweenAnimationBuilder(
                   tween: ColorTween(
-                    begin: commentProv.upvoteIconPressed
+                    begin: commentProv
+                            .getCommentModel![commentIndex].upvoteIconPressed
                         ? Colors.redAccent
                         : Colors.transparent,
-                    end: commentProv.upvoteIconPressed
+                    end: commentProv
+                            .getCommentModel![commentIndex].upvoteIconPressed
                         ? Colors.redAccent
                         : Colors.white,
                   ),
                   duration: const Duration(milliseconds: 250),
                   builder: (context, color, child) {
                     return SvgPicture.asset(
-                      commentProv.upvoteIconPressed
+                      commentProv
+                              .getCommentModel![commentIndex].upvoteIconPressed
                           ? 'assets/icons/upvote_icon_full.svg'
                           : 'assets/icons/upvote_icon.svg',
                       color: color,
@@ -82,29 +92,32 @@ class CommentCard extends ConsumerWidget {
                   },
                 ),
               ),
-              const SizedBox(height: 5),
-              // Text(
-              //   '${(commentProv.getTotalNumberOfVotes(commentIndex: commentIndex))}',
-              //   style: const TextStyle(color: Colors.white),
-              // ),
-              const SizedBox(height: 5),
+              const SizedBox(width: 5),
+              Text(
+                '${(commentProv.getTotalNumberOfVotes(commentIndex: commentIndex))}',
+                style: const TextStyle(color: Colors.white),
+              ),
+              const SizedBox(width: 5),
               GestureDetector(
                 onTap: () {
                   commentProv.downVote(commentIndex: commentIndex);
                 },
                 child: TweenAnimationBuilder(
                   tween: ColorTween(
-                    begin: commentProv.downVoteIconPressed
+                    begin: commentProv
+                            .getCommentModel![commentIndex].downVoteIconPressed
                         ? Colors.blueAccent
                         : Colors.transparent,
-                    end: commentProv.downVoteIconPressed
+                    end: commentProv
+                            .getCommentModel![commentIndex].downVoteIconPressed
                         ? Colors.blueAccent
                         : Colors.white,
                   ),
                   duration: const Duration(milliseconds: 250),
                   builder: (context, color, child) {
                     return SvgPicture.asset(
-                      commentProv.downVoteIconPressed
+                      commentProv.getCommentModel![commentIndex]
+                              .downVoteIconPressed
                           ? 'assets/icons/downvote_icon_full.svg'
                           : 'assets/icons/downvote_icon.svg',
                       color: color,
@@ -112,11 +125,6 @@ class CommentCard extends ConsumerWidget {
                   },
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.reply),
-              ),
-              const Text('Reply'),
             ],
           ),
         ],

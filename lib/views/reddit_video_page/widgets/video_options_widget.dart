@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reddit/data/models/post.model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:reddit/logic/video_provider.dart';
+import 'package:reddit/logic/provider/video_provider.dart';
 
 class VideoOptionsWidget extends ConsumerWidget {
   const VideoOptionsWidget({

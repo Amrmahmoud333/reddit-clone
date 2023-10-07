@@ -28,7 +28,7 @@ class VideoOptionsWidget extends ConsumerWidget {
               end:
                   videoProv.upvoteIconPressed ? Colors.redAccent : Colors.white,
             ),
-            duration: const Duration(milliseconds: 250),
+            duration: const Duration(milliseconds: 750),
             builder: (context, color, child) {
               return SvgPicture.asset(
                 videoProv.upvoteIconPressed
@@ -58,7 +58,7 @@ class VideoOptionsWidget extends ConsumerWidget {
                   ? Colors.blueAccent
                   : Colors.white,
             ),
-            duration: const Duration(milliseconds: 250),
+            duration: const Duration(milliseconds: 750),
             builder: (context, color, child) {
               return SvgPicture.asset(
                 videoProv.downVoteIconPressed

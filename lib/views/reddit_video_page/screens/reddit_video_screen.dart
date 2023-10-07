@@ -45,6 +45,7 @@ class _RedditVideoScreenState extends ConsumerState<RedditVideoScreen> {
             itemCount: 2,
             controller: _scrollController,
             itemBuilder: (context, index) {
+              // if the user clicked on the comment icon open the comments section
               if (ref.watch(videoProvider).commentIsPressed) {
                 _scrollController.jumpTo(400);
               }

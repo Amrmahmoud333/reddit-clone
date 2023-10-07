@@ -80,7 +80,7 @@ class CommentCard extends ConsumerWidget {
                         ? Colors.redAccent
                         : Colors.white,
                   ),
-                  duration: const Duration(milliseconds: 250),
+                  duration: const Duration(milliseconds: 750),
                   builder: (context, color, child) {
                     return SvgPicture.asset(
                       commentProv.getCommentModelList![commentIndex]
@@ -113,7 +113,7 @@ class CommentCard extends ConsumerWidget {
                         ? Colors.blueAccent
                         : Colors.white,
                   ),
-                  duration: const Duration(milliseconds: 250),
+                  duration: const Duration(milliseconds: 750),
                   builder: (context, color, child) {
                     return SvgPicture.asset(
                       commentProv.getCommentModelList![commentIndex]

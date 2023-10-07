@@ -49,6 +49,11 @@ class CommentProvider extends ChangeNotifier {
     if (_commentModelList![commentIndex].upvoteIconPressed) {
       _commentModelList![commentIndex].upvotesCount--;
       _commentModelList![commentIndex].upvoteIconPressed = false;
+    } else if (_commentModelList![commentIndex].downVoteIconPressed) {
+      _commentModelList![commentIndex].upvotesCount++;
+      _commentModelList![commentIndex].downVotesCount--;
+      _commentModelList![commentIndex].upvoteIconPressed = true;
+      _commentModelList![commentIndex].downVoteIconPressed = false;
     } else {
       _commentModelList![commentIndex].upvotesCount++;
       _commentModelList![commentIndex].upvoteIconPressed = true;
@@ -59,9 +64,16 @@ class CommentProvider extends ChangeNotifier {
   }
 
   downVote({required int commentIndex}) {
+    // If the downvote is pressed that means remove the downvote
     if (_commentModelList![commentIndex].downVoteIconPressed) {
       _commentModelList![commentIndex].downVotesCount--;
       _commentModelList![commentIndex].downVoteIconPressed = false;
+    } else if (_commentModelList![commentIndex].upvoteIconPressed) {
+      // If the upvote is pressed that means remove the upvote and create a downvote
+      _commentModelList![commentIndex].downVotesCount++;
+      _commentModelList![commentIndex].upvotesCount--;
+      _commentModelList![commentIndex].downVoteIconPressed = true;
+      _commentModelList![commentIndex].upvoteIconPressed = false;
     } else {
       _commentModelList![commentIndex].downVotesCount++;
       _commentModelList![commentIndex].downVoteIconPressed = true;

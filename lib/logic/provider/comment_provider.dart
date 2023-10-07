@@ -11,7 +11,7 @@ class CommentProvider extends ChangeNotifier {
 
   createPostModel() {
     List<CommentModel> _commentModelCopy = [];
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 3; i++) {
       _commentModelCopy.insert(
         0,
         CommentModel(
@@ -37,6 +37,11 @@ class CommentProvider extends ChangeNotifier {
   deleteComment({required String id}) {
     _commentModelList!.removeWhere((element) => element.id == id);
     notifyListeners();
+  }
+
+  editComment({required String text, required int index}) {
+    // send a netwrok request to edit it before edit the list
+    _commentModelList![index].text = text;
   }
 
   upVote({required int commentIndex}) {

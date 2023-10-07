@@ -1,6 +1,6 @@
 class CommentModel {
   final String id;
-  final String text;
+  String text;
   final DateTime createdAt;
   final String postId;
   final String username;

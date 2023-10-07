@@ -89,6 +89,7 @@ Stack commentWidget(
                                           const Icon(Icons.mode_edit_outlined),
                                       title: const Text('Edit'),
                                       onTap: () {
+                                        //  commentProvider.editComment(text: _controller.text , index: index );
                                         Navigator.pop(context);
                                       },
                                     ),
